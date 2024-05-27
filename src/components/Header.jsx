@@ -86,8 +86,14 @@ const Header = () => {
                                       {/* menus */}
                                       <div className='w-full flex flex-col items-start gap-7 pt-6 '>
                     
-                                        <Link className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '>My Accunt</Link>
-                                        <Link className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '>Add New Templete</Link>
+                                        <Link 
+                                        className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
+                                        to={"/profile"}
+                                        >My Accunt</Link>
+                                        <Link 
+                                        className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
+                                        to={"/template/create"}
+                                        >Add New Templete</Link>
                                         <div onClick={signOutUser} className='w-full px-2 py-2 border-t border-gray-700 flex items-center cursor-pointer justify-between group'>
                                           <p className=' group-hover:text-gray-500 text-gray-400'>Sign Out</p>
                                           <LuLogOut className=' group-hover:text-gray-500 text-gray-400'/>
