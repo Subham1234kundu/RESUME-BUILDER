@@ -1,4 +1,4 @@
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, query, setDoc } from "firebase/firestore";
 import {auth, db} from "../config/firebase.config";
 
 export const getUserDetail = ()=>{
@@ -6,7 +6,7 @@ export const getUserDetail = ()=>{
         const unSubscribe =  auth.onAuthStateChanged((userCard)=>{
             if(userCard){
                 const userData = userCard.providerData[0];
-                console.log(userData)
+                // console.log(userData)
                 
                 const unSubscribe = onSnapshot(doc(db,"user", userData?.uid),(_doc)=>{
                     if(_doc.exists()){
@@ -25,5 +25,24 @@ export const getUserDetail = ()=>{
 
             unSubscribe();
         });
+    });
+};
+
+
+
+export const getTemplates = ()=>{
+    return new Promise((res , rej)=>{
+        const templeteQuery = query(
+            collection(db , "templates"),
+            orderBy("timestamp" , "asc")
+        );
+        
+        const unSubscribe = onSnapshot(templeteQuery , (querySnap) => {
+            const templates = querySnap.docs.map((doc) => doc.data());
+            console.log(templates)
+            res(templates);
+        });
+        
+        return unSubscribe;
     });
 }

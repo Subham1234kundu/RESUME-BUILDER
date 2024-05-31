@@ -1,6 +1,137 @@
-import React from 'react'
-
+import React, { useState } from 'react';
+import { PuffLoader } from 'react-spinners';
+import { FaTrash, FaUpload } from "react-icons/fa";
+import { toast } from 'react-toastify';
+import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
+import { db, storage } from '../config/firebase.config';
+import { initialTags } from '../utils/helper';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import useTemplates from '../hooks/useTemplates';
 const CreateTemplate = () => {
+    const [formData , setFormData] = useState({
+        title:"",
+        imgUrl:null
+    });
+
+    const [imgAsset , setImgAsset] = useState({
+        isImgLoading: false,
+        url:null,
+        progress:0,
+    });
+    const [selectedTags , setSelectedTags] = useState([]);
+
+    const {
+        data:templates , 
+        isLoading:templatesIsLoading , 
+        isError :templatesIsError , 
+        refetch:templatesRefetch ,
+        } = useTemplates();
+
+    // handling the input field change
+    const handleInputChange = (e)=>{
+        const {name, value} = e.target
+        setFormData((prevRec)=> ({...prevRec , [name]:value}))
+    };
+
+    const handleImgSelect = async (e)=>{
+        const file = e.target.files[0];
+        setImgAsset((prevImg) => ({...prevImg , isImgLoading:true }));
+        if(file && isAllowed(file)){
+            const storageRef = ref(storage , `Template/${Date.now()} - ${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef , file);
+            uploadTask.on('state_changed' ,
+            (snapshot)=>{
+                setImgAsset((prevImg) => ({...prevImg , progress: 
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+                    
+                }))
+            } , 
+            (error) => {
+                if(error.message.includes("storage/unauthorized")){
+                    toast.error(`Error:Authorization Revoked`);
+                }else{
+                    toast.error(`Error: ${error.message}`);
+                }
+            },
+                ()=>{
+                    getDownloadURL(uploadTask.snapshot.ref).then(downloadURL =>{
+                          setImgAsset((prevImg)=>({
+                            ...prevImg,
+                            url:downloadURL
+                          }));            
+                    });
+                    toast.success("Image uploaded");
+                     setInterval(
+                        setImgAsset((prevImg)=>({
+                            ...prevImg,
+                            isImgLoading: false
+                        })),2000)
+                }
+            )
+        }else{
+            toast.info("Invalid file format")
+        }
+    };
+
+    //action to dlt
+    const dltAnImg = async()=>{
+        setInterval(
+            setImgAsset((prevImg)=>({
+                ...prevImg,
+                progress : 0,
+                url: null, 
+            })),2000)
+        
+        const dltRef = ref(storage, imgAsset.url);
+        deleteObject(dltRef).then(() => {
+            toast.success("Image removed");
+
+        } )
+    }
+
+    const isAllowed = (file) =>{
+        const allowedTypes  = ["image/jpeg" , "image/jpg" , "image/png"];
+        return allowedTypes.includes(file.type);
+        
+    }
+
+
+    const handleSelectedTags = (tag)=>{
+        if(selectedTags.includes(tag)){
+            setSelectedTags(selectedTags.filter((selected) => selected !== tag));
+        }
+        else{
+            setSelectedTags([...selectedTags , tag]);
+        }
+
+    };
+
+    const pushToCloud = async()=>{
+       const timeStamp = serverTimestamp();
+       const id = `${Date.now()}`;
+       const _doc = {
+        id:id,
+        title:formData.title,
+        imageURL : imgAsset.url,
+        tags: selectedTags,
+        name:templates && templates.length > 0 
+        ? `Template${templates.length+1}` 
+        : "Template1",
+        timeStamp:timeStamp,
+       };
+       
+       await setDoc(doc(db,"templates",id), _doc).then(()=>{
+            setFormData((prevData)=> ({...prevData, title:"", imageURL:""}));
+            setImgAsset((prevAsset)=> ({...prevAsset, url:null}));
+            setSelectedTags([]);
+            templatesRefetch();
+            toast.success("Data pushed to the cloud");
+       }).catch(error => {
+            toast.error(`Error : ${error.message}`)
+       });
+    };
+
+
   return (
     <div className='w-full px-4 lg:px-10 2xl:px-32 py-4 grid grid-cols-1 lg:grid-cols-12'>
         {/* left containeer */}
@@ -14,14 +145,100 @@ const CreateTemplate = () => {
                     TempID:{""}
                 </p>
                 <p className='text-base text-gray-500 capitalize font-bold'>
-                    Template1
+                    {templates && templates.length> 0 ? `Template${templates.length+1}` : "Template1"}
                 </p>
             </div>
-        </div>
+
+            {/* template title section */}
+            <input 
+            className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-700' 
+            type="text" 
+            name='title' 
+            placeholder='Template Title' 
+            value={formData.title} 
+            onChange={handleInputChange}
+            />
+
+                        {/* file uploader section */}
+                        <div className='w-full bg-gray-800 backdrop-blur-md h-[420px] lg:h-[620px] 2xl:h-[740px] rounded-md border-2 border-dotted border-gray-700 cursor-pointer flex items-center justify-center'>
+                            {imgAsset.isImgLoading ? (
+                                <>
+                                <div className='flex flex-col items-center justify-center gap-4'>
+                                    <PuffLoader color='red' size={40}/>
+                                    <p>{imgAsset?.progress.toFixed(2)}%</p>
+                                </div>
+                                </>
+                                ) : 
+                                (
+                                <>
+                                    {!imgAsset?.url ? 
+                                    <>
+                                    <label className='w-full cursor-pointer h-full'>
+                                        <div className='flex flex-col justify-center items-center h-full w-full'>
+                                            <div className='flex items-center justify-center cursor-pointer flex-col gap-4'>
+                                                <FaUpload className='text-2xl'/>
+                                                <p className='text-lg text-txtLight'>Click to upload</p>
+                                            </div>
+                                        </div>
+
+                                        <input 
+                                        type="file" 
+                                        className=' w-0 h-0' 
+                                        accept='.jpeg, .jpg, .png'
+                                        onChange={handleImgSelect} 
+                                        />
+                                    </label>
+                                    </>
+                                    :
+                                    <>
+                                    <div className=' relative w-full h-full overflow-hidden rounded-md'>
+                                        <img 
+                                        src={imgAsset?.url}
+                                        className=' w-full h-full object-cover'
+                                        loading='lazy'
+                                        alt="" />
+
+                                        {/* delete position */}
+                                        <div onClick={dltAnImg} className=' absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500'>
+                                            <FaTrash className='text-sm text-white'/>
+                                        </div>
+                                    </div>
+                                    </>}
+                                </>
+                                )}
+                        </div>
+
+                        {/* tags  */}
+                        <div className='w-full flex items-center flex-wrap gap-2'>
+                            {initialTags.map((tag , index)=>(
+                                <div 
+                                className={` border border-gray-600 px-2 py-1 rounded-md cursor-pointer ${selectedTags.includes(tag)  ? "text-black bg-gray-300" : ""}`}
+                                key={index}
+                                onClick={()=>handleSelectedTags(tag)}
+                                >
+                                <p className='text-xs'>{tag}</p>
+                                </div>                                
+
+                            )
+                            )}
+
+                        </div>
+
+                        {/* btn access */}
+                        <button 
+                        type='button'
+                        onClick={pushToCloud}
+                        className='bg-gray-300 text-gray-900 w-full rounded-md py-3'
+                        >
+                            save
+                        </button>
+            </div>
+
+
 
         {/* right containeer */}
         <div className=' col-span-12 lg:col-span-8 2xl:col-span-9'>
-             
+            2 
         </div>
       
     </div>
