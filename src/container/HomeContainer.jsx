@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Filters from '../components/Filters';
 
 const HomeContainer = () => {
   return (
-    <div>
-      HomeContainer
+    <div className='w-full px-4 lg:px-12 py-6 flex flex-col items-center justify-start'>
+      {/* Filter section  */}
+        <Filters/>
+      {/* Render those templete - Resume PIN */}
     </div>
   )
 }

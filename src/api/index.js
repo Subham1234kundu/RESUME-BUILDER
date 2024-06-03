@@ -34,15 +34,16 @@ export const getTemplates = ()=>{
     return new Promise((res , rej)=>{
         const templeteQuery = query(
             collection(db , "templates"),
-            orderBy("timestamp" , "asc")
+            orderBy("timeStamp" , "asc")
         );
         
         const unSubscribe = onSnapshot(templeteQuery , (querySnap) => {
             const templates = querySnap.docs.map((doc) => doc.data());
-            console.log(templates)
             res(templates);
         });
         
         return unSubscribe;
     });
 }
+
+

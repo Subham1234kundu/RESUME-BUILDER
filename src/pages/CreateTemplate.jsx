@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PuffLoader } from 'react-spinners';
 import { FaTrash, FaUpload } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
 import { db, storage } from '../config/firebase.config';
-import { initialTags } from '../utils/helper';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { adminIds, initialTags } from '../utils/helper';
+import { deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import useTemplates from '../hooks/useTemplates';
+import useUser from '../hooks/useUser';
+import {ClimbingBoxLoader} from "react-spinners"
+import { useNavigate } from 'react-router-dom';
 const CreateTemplate = () => {
     const [formData , setFormData] = useState({
         title:"",
@@ -26,6 +29,9 @@ const CreateTemplate = () => {
         isError :templatesIsError , 
         refetch:templatesRefetch ,
         } = useTemplates();
+
+    const {data:user,isLoading} = useUser();
+    const navigate = useNavigate()
 
     // handling the input field change
     const handleInputChange = (e)=>{
@@ -120,7 +126,8 @@ const CreateTemplate = () => {
         timeStamp:timeStamp,
        };
        
-       await setDoc(doc(db,"templates",id), _doc).then(()=>{
+       await setDoc(doc(db,"templates",id), _doc)
+       .then(()=>{
             setFormData((prevData)=> ({...prevData, title:"", imageURL:""}));
             setImgAsset((prevAsset)=> ({...prevAsset, url:null}));
             setSelectedTags([]);
@@ -131,6 +138,25 @@ const CreateTemplate = () => {
        });
     };
 
+    //function to remove the data from the cloud
+    const removeTemplate = async(template)=>{
+        const deleteRef = ref(storage , template?.imageURL )
+        await deleteObject(deleteRef).then(async ()=>{
+            await deleteDoc(doc(db , "templates" , template?.id)).then(()=>{
+                toast.success("Templete deleted from the cloud");
+                templatesRefetch();
+            })
+            .catch(err => {
+                toast.error(`Error: ${err.message}`)
+            })
+        })
+    }
+
+    useEffect(()=>{
+        if(!isLoading && !adminIds.includes(user ?.uid)){
+            navigate("/" , {replace: true})
+        }
+    },[user,isLoading])
 
   return (
     <div className='w-full px-4 lg:px-10 2xl:px-32 py-4 grid grid-cols-1 lg:grid-cols-12'>
@@ -237,8 +263,39 @@ const CreateTemplate = () => {
 
 
         {/* right containeer */}
-        <div className=' col-span-12 lg:col-span-8 2xl:col-span-9'>
-            2 
+        <div className=' col-span-12 lg:col-span-8 2xl:col-span-9 px-2 w-full flex-1 py-4'>
+            {templatesIsLoading ? (<>
+                <div className='w-full h-full flex items-center justify-center'>
+                <ClimbingBoxLoader color={'red'} size={15}/>
+                </div>
+            </>)
+            :
+            (<>
+                {templates && templates.length > 0 ? (
+                <>
+                                  <div className=' w-full h-full grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4'>
+                {templates?.map((template) =>(
+
+                     <div key={template.id} className='w-full h-[500px] rounded-md overflow-hidden relative'>
+                        <img src={template?.imageURL} alt="" className='w-full object-cover' />
+                        <div onClick={()=>removeTemplate(template)} 
+                        className=' absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500 cursor-pointer'>
+                        <FaTrash className='text-sm text-white'/>
+                        </div>
+                    </div>                   
+                  
+                ))}
+                </div>
+                </>
+                ):(
+                <>
+                <div className='w-full h-full flex flex-col gap-6 items-center justify-center'>
+                <ClimbingBoxLoader color={'red'} size={15}/>
+                <p className='text-xl tracking-wider capitalize text-gray-600'>No data</p>
+                </div>                
+                </>
+                )}
+            </>)} 
         </div>
       
     </div>

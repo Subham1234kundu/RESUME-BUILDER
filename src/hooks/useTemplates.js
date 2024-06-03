@@ -1,6 +1,8 @@
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import { getTemplates } from "../api";
+import  {getTemplates} from "../api/index.js";
+
+
 
 const useTemplates = () => {
     const { data, isLoading, isError, refetch } = useQuery(
@@ -8,7 +10,6 @@ const useTemplates = () => {
         async () => {
             try {
                 const templates = await getTemplates();
-                console.log("Fetched templates:", templates);
                 return templates;
             } catch (err) {
                 console.error("Error fetching templates:", err);
@@ -18,7 +19,12 @@ const useTemplates = () => {
         { refetchOnWindowFocus: false }
     );
 
-    return { data, isLoading, isError, refetch };
+    return {
+     data,
+     isLoading,
+     isError,
+     refetch 
+    };
 };
 
 export default useTemplates;

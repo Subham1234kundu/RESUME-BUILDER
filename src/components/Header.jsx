@@ -8,6 +8,7 @@ import { LuLogOut } from "react-icons/lu";
 import { fadeInOutOpacity, slideUpDownMenu } from '../animations';
 import { auth } from '../config/firebase.config';
 import { useQueryClient } from 'react-query';
+import useFilters from '../hooks/useFilters';
 
 
 const Header = () => {
@@ -16,10 +17,23 @@ const Header = () => {
 
   const queryClient = useQueryClient();
 
+  const {data:filterData } = useFilters();
+
   const signOutUser = async()=>{
     await auth.signOut().then(()=>{
         queryClient.setQueryData("user" , null);
     })
+  };
+
+  const handleSearchTerm = (e)=>{
+    queryClient.setQueriesData("globalFilter" , {
+      ...queryClient.getQueriesData("globalFilter"), 
+      searchTerm:e.target.value });
+  }
+  const clearFilter = ()=>{
+    queryClient.setQueriesData("globalFilter" , {
+      ...queryClient.getQueriesData("globalFilter"), 
+      searchTerm:"" });
   }
 
   return (
@@ -29,7 +43,19 @@ const Header = () => {
       </Link>
 
       <div className=' flex-1 border border-gray-900 px-4 py-1 rounded-md flex items-center justify-between bg-gray-700'>
-        <input type="text" placeholder='Search here...' className='flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none' />
+        <input 
+        value={filterData?.searchTerm ? filterData?.searchTerm : ""}
+        onChange={handleSearchTerm}
+        type="text" placeholder='Search here...' className='flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none text-white' />
+                <AnimatePresence>
+          {filterData?.searchTerm.length > 0 ? 
+         ( <motion.div
+         onClick={clearFilter}
+         {...fadeInOutOpacity}
+         className='w-8 h-8 flex items-center justify-center bg-gray-600 rounded-md cursor-pointer active:scale-95 duration-150 text-gray-200'
+         > <p>X</p> </motion.div>):<></>
+          }
+        </AnimatePresence>
       </div>
 
       <AnimatePresence>
