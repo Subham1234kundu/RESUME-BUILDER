@@ -17,7 +17,7 @@ const HomeScreen = () => {
           <Route path='/template/create' element={<CreateTemplate/>}/>
           <Route path='/profile/:uid' element={<UserProfile/>}/>
           <Route path='/resume/*' element={<CreateResume/>}/>
-          <Route path='/resumeDetail/:templeteID' element={<TemplateDesignPinDets/>}/>
+          <Route path='/resumeDetail/:templateID' element={<TemplateDesignPinDets/>}/>
         </Routes>
       </Suspense>
       </main>

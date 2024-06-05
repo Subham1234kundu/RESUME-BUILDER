@@ -114,7 +114,7 @@ const Header = () => {
                     
                                         <Link 
                                         className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
-                                        to={"/profile"}
+                                        to={`/profile/${data?.uid}`}
                                         >My Accunt</Link>
                                         <Link 
                                         className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
