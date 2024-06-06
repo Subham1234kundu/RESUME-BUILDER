@@ -38,7 +38,7 @@ const addToFavrouts = async(e)=>{
   if(isError){
     return (
       <div className=' w-full h-[60vh] flex flex-col items-center justify-center'>
-        <p className=' text-lg text-yellow-600 font-semibold'>Error while fetching the data... Plese try again later</p>
+        <p className=' text-lg text-gray-900 font-semibold'>Error while fetching the data... Plese try again later</p>
       </div>
     );
   }
@@ -150,7 +150,7 @@ const addToFavrouts = async(e)=>{
 
           {/* Edit the template */}
           {user && (
-            <Link className=' w-full px-4 py-3 rounded-md flex items-center justify-center bg-emerald-500 cursor-pointer' to={`/resume/${data?.name}?templateId=${templateID}`}>
+            <Link className=' w-full px-4 py-3 rounded-md flex items-center justify-center shadow-md bg-emerald-500 cursor-pointer' to={`/resume/${data?.name}?templateId=${templateID}`}>
               <p className=' text-white font-semibold text-lg'>Edit the Template</p>
             </Link>
           )}
@@ -158,16 +158,16 @@ const addToFavrouts = async(e)=>{
           {/* tags */}
           <div className=' w-full flex items-center justify-start flex-wrap  gap-2'>
             {data?.tags?.map((tag, index)=>(
-              <p className=' text-xs border text-white border-gray-300 px-2 py-1 rounded-md whitespace-nowrap' key={index}>{tag}</p>
+              <p className=' text-xs border text-gray-800 border-gray-400 px-2 py-1 rounded-md whitespace-nowrap' key={index}>{tag}</p>
             ))}
           </div>
         </div>
       </div>
 
       {/* Simillar templates */}
-      {templates?.filter((temp)=>temp.id !== data.id)?.length >0 && (
+      {templates?.filter((temp)=>temp.id !== data?.id)?.length >0 && (
       <div className=' w-full py-8 flex flex-col items-start justify-start gap-4'>
-        <p className=' text-lg font-semibold text-white'>
+        <p className=' text-lg font-semibold text-gray-900'>
           You might also like 
         </p>
 
@@ -175,7 +175,7 @@ const addToFavrouts = async(e)=>{
         
          <>
         <AnimatePresence>
-          { templates?.filter((temp)=>temp.id !== data.id).map((template , index)=>(
+          { templates?.filter((temp)=>temp.id !== data?.id).map((template , index)=>(
             <TemplateDesignPin 
             key={template?.id} 
             index={index} 

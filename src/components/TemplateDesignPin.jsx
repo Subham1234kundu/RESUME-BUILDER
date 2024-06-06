@@ -40,7 +40,7 @@ const TemplateDesignPin = ({data,index}) => {
     onMouseEnter={()=>setIsHovered(true)}
     onMouseLeave={()=>setIsHovered(false)}
     >
-        <div className=' w-full h-[500px] 2xl:h-[740px] rounded-md bg-gray-400 overflow-hidden relative'>
+        <div className=' w-full h-[400px] 2xl:h-[500px] rounded-md bg-gray-400 overflow-hidden relative'>
         <img src={data?.imageURL} alt="" className=' w-full h-full object-cover' />
 
         <AnimatePresence>

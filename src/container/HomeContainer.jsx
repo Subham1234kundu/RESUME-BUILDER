@@ -13,8 +13,9 @@ const HomeContainer = () => {
     <div className='w-full px-4 lg:px-12 py-6 flex flex-col items-center justify-start'>
       {/* Filter section  */}
         <Filters/>
+
       {/* Render those templete - Resume PIN */}
-      {temp_isError ? <><p className='text-lg text-yellow-600 '>something went wrong... plese try again later</p></>:<>
+      {temp_isError ? <><p className='text-lg text-[#424242] '>something went wrong... plese try again later</p></>:<>
        <div className=' w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2'>
           <RenderTemplate templates={templates}/>
        </div>
@@ -36,7 +37,7 @@ const RenderTemplate = ({templates}) =>{
         </AnimatePresence>
       </> : 
       <>
-      <p className='text-2xl text-yellow-600'>No Data found</p>
+      <p className='text-2xl text-[#424242]'>No Data found</p>
       </>}</>
     )
 }

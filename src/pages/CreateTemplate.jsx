@@ -161,7 +161,7 @@ const CreateTemplate = () => {
   return (
     <div className='w-full px-4 lg:px-10 2xl:px-32 py-4 grid grid-cols-1 lg:grid-cols-12'>
         {/* left containeer */}
-        <div className=' col-span-12 lg:col-span-4 2xl:col-span-3 w-full flex-1 flex items-center justify-start flex-col gap-4 px-2 text-gray-300'>
+        <div className=' col-span-12 lg:col-span-4 2xl:col-span-3 w-full flex-1 flex items-center justify-start flex-col gap-4 px-2 text-gray-900'>
             <div className='w-full'>
                 <p className='text-lg'>Create a new Template</p>
             </div>
@@ -177,7 +177,7 @@ const CreateTemplate = () => {
 
             {/* template title section */}
             <input 
-            className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-700' 
+            className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-400 bg-gray-300' 
             type="text" 
             name='title' 
             placeholder='Template Title' 
@@ -186,7 +186,7 @@ const CreateTemplate = () => {
             />
 
                         {/* file uploader section */}
-                        <div className='w-full bg-gray-800 backdrop-blur-md h-[420px] lg:h-[620px] 2xl:h-[740px] rounded-md border-2 border-dotted border-gray-700 cursor-pointer flex items-center justify-center'>
+                        <div className='w-full bg-emerald-100 backdrop-blur-md h-[420px] lg:h-[620px] 2xl:h-[740px] rounded-md border-2 border-dotted border-emerald-500 cursor-pointer flex items-center justify-center'>
                             {imgAsset.isImgLoading ? (
                                 <>
                                 <div className='flex flex-col items-center justify-center gap-4'>
@@ -203,7 +203,7 @@ const CreateTemplate = () => {
                                         <div className='flex flex-col justify-center items-center h-full w-full'>
                                             <div className='flex items-center justify-center cursor-pointer flex-col gap-4'>
                                                 <FaUpload className='text-2xl'/>
-                                                <p className='text-lg text-txtLight'>Click to upload</p>
+                                                <p className='text-lg text-gray-500'>Click to upload</p>
                                             </div>
                                         </div>
 
@@ -238,7 +238,7 @@ const CreateTemplate = () => {
                         <div className='w-full flex items-center flex-wrap gap-2'>
                             {initialTags.map((tag , index)=>(
                                 <div 
-                                className={` border border-gray-600 px-2 py-1 rounded-md cursor-pointer ${selectedTags.includes(tag)  ? "text-black bg-gray-300" : ""}`}
+                                className={` border border-gray-600 px-2 py-1 rounded-md cursor-pointer ${selectedTags.includes(tag)  ? "text-white bg-gray-500" : ""}`}
                                 key={index}
                                 onClick={()=>handleSelectedTags(tag)}
                                 >
@@ -254,7 +254,7 @@ const CreateTemplate = () => {
                         <button 
                         type='button'
                         onClick={pushToCloud}
-                        className='bg-gray-300 text-gray-900 w-full rounded-md py-3'
+                        className='bg-emerald-500 text-white w-full rounded-md py-3'
                         >
                             save
                         </button>

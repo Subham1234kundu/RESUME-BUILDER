@@ -3,7 +3,7 @@ import {ClimbingBoxLoader} from "react-spinners"
 const MainSpinner = () => {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
-      <ClimbingBoxLoader color={'red'} size={15}/>
+      <ClimbingBoxLoader color={'green'} size={15}/>
     </div>
   )
 }

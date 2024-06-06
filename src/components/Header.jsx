@@ -37,16 +37,16 @@ const Header = () => {
   }
 
   return (
-    <header className='w-full flex items-center justify-between px-4 py-3 lg:px-8 border-b border-gray-900 bg-bgPrimary z-50 gap-12 sticky top-0'>
+    <header className='w-full flex items-center justify-between px-4 py-3 lg:px-8 border-b border-gray-200 bg-[#e9e9e9] z-50 gap-12 sticky top-0'>
       <Link to={"/"}>
         <img src={Logo} className=' w-12 h-auto object-contain' alt="" />
       </Link>
 
-      <div className=' flex-1 border border-gray-900 px-4 py-1 rounded-md flex items-center justify-between bg-gray-700'>
+      <div className=' flex-1 border border-gray-300 px-4 py-1 rounded-md flex items-center justify-between bg-[#d6d6d6]'>
         <input 
         value={filterData?.searchTerm ? filterData?.searchTerm : ""}
         onChange={handleSearchTerm}
-        type="text" placeholder='Search here...' className='flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none text-white' />
+        type="text" placeholder='Search here...' className='flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none text-[#494949]' />
                 <AnimatePresence>
           {filterData?.searchTerm.length > 0 ? 
          ( <motion.div
@@ -84,7 +84,7 @@ const Header = () => {
                     {isMenu && 
                      <motion.div 
                                      {...slideUpDownMenu}
-                                      className=' absolute px-4 py-3 rounded-md bg-slate-600 right-0 top-14 flex flex-col items-center justify-center gap-3 w-64 pt-12'
+                                      className=' absolute px-4 py-3 rounded-md bg-[#c4c4c4] right-0 top-14 flex flex-col items-center justify-center gap-3 w-64 pt-12 shadow-md'
                                       onMouseLeave={()=>setIsMenu(false)}
                                       >
 
@@ -104,7 +104,7 @@ const Header = () => {
                                     }
                     
                                       {data?.displayName && (
-                                        <p className='text-lg text-gray-300'>
+                                        <p className='text-lg text-gray-900'>
                                           {data?.displayName}
                                         </p>
                                       )}
@@ -113,16 +113,16 @@ const Header = () => {
                                       <div className='w-full flex flex-col items-start gap-7 pt-6 '>
                     
                                         <Link 
-                                        className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
+                                        className='text-gray-600 hover:text-gray-500 text-base whitespace-nowrap '
                                         to={`/profile/${data?.uid}`}
                                         >My Accunt</Link>
                                         <Link 
-                                        className='text-gray-500 hover:text-gray-400 text-base whitespace-nowrap '
+                                        className='text-gray-600 hover:text-gray-500 text-base whitespace-nowrap '
                                         to={"/template/create"}
                                         >Add New Templete</Link>
                                         <div onClick={signOutUser} className='w-full px-2 py-2 border-t border-gray-700 flex items-center cursor-pointer justify-between group'>
-                                          <p className=' group-hover:text-gray-500 text-gray-400'>Sign Out</p>
-                                          <LuLogOut className=' group-hover:text-gray-500 text-gray-400'/>
+                                          <p className=' group-hover:text-gray-600 text-gray-400'>Sign Out</p>
+                                          <LuLogOut className=' group-hover:text-gray-700 text-gray-600'/>
                                         </div>
                     
                                       </div>
@@ -132,7 +132,7 @@ const Header = () => {
             </motion.div> 
             : 
             <Link to={"/auth"}>
-              <motion.button className=' text-gray-300 px-4 py-2  bg-gray-700 hover:shadow-md active:scale-150 duration-150'
+              <motion.button className=' text-gray-300 px-4 py-2  bg-emerald-600 hover:shadow-md active:scale-150 duration-150'
               {...fadeInOutOpacity}
               >Login</motion.button>
             </Link>}

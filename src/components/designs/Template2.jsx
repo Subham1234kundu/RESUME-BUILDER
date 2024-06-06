@@ -366,6 +366,63 @@ const Template2 = () => {
     })
   };
 
+  // const generatePDF = async () => {
+  //   // Access the DOM element using useRef hooks
+  //   const element = resumeRef.current;
+  //   if (!element) {
+  //     toast.info("Unable to capture the content at the moment");
+  //     return;
+  //   }
+  
+  //   try {
+  //     const dataUrl = await htmlToImage.toPng(element);
+  
+  //     // A4 dimensions in mm
+  //     const a4Width = 210;
+  //     const a4Height = 297;
+  
+  //     // Create a new jsPDF instance
+  //     const pdf = new jsPDF({
+  //       orientation: "p",
+  //       unit: "mm",
+  //       format: [a4Width, a4Height]
+  //     });
+  
+  //     // Create an image from the data URL
+  //     const img = new Image();
+  //     img.src = dataUrl;
+  //     img.onload = () => {
+  //       const imgWidth = img.width;
+  //       const imgHeight = img.height;
+  
+  //       // Calculate the aspect ratio of the image
+  //       const aspectRatio = imgWidth / imgHeight;
+  
+  //       // Calculate the dimensions to fit the image within A4 while maintaining aspect ratio
+  //       let width, height;
+  //       if (imgWidth / a4Width > imgHeight / a4Height) {
+  //         width = a4Width;
+  //         height = a4Width / aspectRatio;
+  //       } else {
+  //         height = a4Height;
+  //         width = a4Height * aspectRatio;
+  //       }
+  
+  //       // Calculate margins to center the image on the PDF
+  //       const horizontalMargin = (a4Width - width) / 2;
+  //       const verticalMargin = (a4Height - height) / 2;
+  
+  //       // Add the image to the PDF
+  //       pdf.addImage(dataUrl, "PNG", horizontalMargin, verticalMargin, width, height);
+  //       // Save the PDF
+  //       pdf.save("resume.pdf");
+  //     };
+  //   } catch (err) {
+  //     toast.info(`Error: ${err.message}`);
+  //   }
+  // };
+  
+
   const generateImage = async () => {
     const element = resumeRef.current;
     if(!element){
@@ -563,7 +620,7 @@ const Template2 = () => {
                         >
                           <input
                             type="text"
-                            readOnly="true"
+                            readOnly={true}
                             name="major"
                             value={edu.major}
                             onChange={(e) => handleEducationChange(i, e)}
@@ -573,7 +630,7 @@ const Template2 = () => {
                           />
 
                           <textarea
-                            readOnly="true"
+                            readOnly={true}
                             className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
                               isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
                             }`}
@@ -627,7 +684,7 @@ const Template2 = () => {
                       onChange={handleChange}
                       name="refererName"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -638,7 +695,7 @@ const Template2 = () => {
                       onChange={handleChange}
                       name="refererRole"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -661,7 +718,7 @@ const Template2 = () => {
                       onChange={handleChange}
                       name="mobile"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -683,7 +740,7 @@ const Template2 = () => {
                       onChange={handleChange}
                       name="email"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -706,7 +763,7 @@ const Template2 = () => {
                       onChange={handleChange}
                       name="website"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -725,7 +782,7 @@ const Template2 = () => {
                     </div>
 
                     <textarea
-                      readOnly="true"
+                      readOnly={true}
                       className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
                         isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
                       }`}
@@ -750,12 +807,12 @@ const Template2 = () => {
                 <div className="flex items-center justify-start ">
                   <input
                     type="text"
-                    readOnly="true"
+                    readOnly={true}
                     name="fullname"
                     value={formData.fullname}
                     onChange={handleChange}
                     className={`bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
-                      isEdit && "text-white w-full"
+                      isEdit && "text-black w-full"
                     }`}
                   />
                 </div>
@@ -765,9 +822,9 @@ const Template2 = () => {
                   onChange={handleChange}
                   name="professionalTitle"
                   type="text"
-                  readOnly="true"
+                  readOnly={true}
                   className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
-                    isEdit && "text-white"
+                    isEdit && "text-black"
                   }`}
                 />
               </div>
@@ -778,7 +835,7 @@ const Template2 = () => {
                   <p className="uppercase text-xl tracking-wider">About Me</p>
                   <div className="w-full h-1 bg-txtDark my-3"></div>
                   <textarea
-                    readOnly="true"
+                    readOnly={true}
                     className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
                       isEdit ? "bg-gray-200" : "bg-transparent"
                     }`}
@@ -816,7 +873,7 @@ const Template2 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="year"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -839,7 +896,7 @@ const Template2 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="title"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -850,14 +907,14 @@ const Template2 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="companyAndLocation"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
 
                               <textarea
-                                readOnly="true"
+                                readOnly={true}
                                 className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -910,7 +967,7 @@ const Template2 = () => {
                                   onChange={(e) => handleSkillsChange(i, e)}
                                   name="title"
                                   type="text"
-                                  readOnly="true"
+                                  readOnly={true}
                                   className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
                                     isEdit ? "bg-gray-200" : "bg-transparent"
                                   }`}

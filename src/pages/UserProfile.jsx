@@ -14,7 +14,8 @@ const UserProfile = () => {
   const [activeTab , setActiveTab] = useState("collections");
   const{data:templates,refetch:temp_refetch,isLoading:temp_isLoading} = useTemplates();
 
-  const {data:saveResume} = useQuery(["resumes"],() => getSavedResumes(user?.uid));
+  const {data:saveResume} = useQuery(["savedResume"],() => 
+  getSavedResumes(user?.uid));
 
 
 
@@ -32,7 +33,7 @@ const UserProfile = () => {
         {user?.photoURL ? (
           <>
           <img src={user?.photoURL} 
-          className=' w-24 h-24 rounded-full border-2 border-gray-900 shadow-md -mt-12'
+          className=' w-24 h-24 rounded-full border-2 border-white shadow-md -mt-12'
           alt="" 
           referrerPolicy='no-referrer'
           loading='lazy'
@@ -41,14 +42,14 @@ const UserProfile = () => {
         ):
         ( <>
           <img src="https://images.unsplash.com/photo-1621541698493-4256a218ae8b?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-          className=' w-24 h-24 rounded-full border-2 border-gray-900 shadow-md -mt-12'
+          className=' w-24 h-24 rounded-full border-2 border-white shadow-md -mt-12'
           alt="" 
           referrerPolicy='no-referrer'
           loading='lazy'
           />
           </>)
         }
-        <p className=' text-2xl text-white'>{user?.displayName}</p>
+        <p className=' text-2xl text-gray-900'>{user?.displayName}</p>
         </div>
 
         {/* tabs */}
@@ -56,16 +57,16 @@ const UserProfile = () => {
           <div className=' px-4 py-2 rounded-md flex items-center justify-center gap-2 group cursor-pointer'
           onClick={()=>setActiveTab("collections")}
           >
-            <p className={` text-base text-gray-300 group-hover:text-gray-400 px-4 py-1 rounded-full
-            ${activeTab === "collections" && "bg-white shadow-md text-gray-900"}
+            <p className={` text-base text-gray-700 group-hover:text-gray-400 px-4 py-1 rounded-full
+            ${activeTab === "collections" && "bg-emerald-200 shadow-md text-gray-900"}
             `}>collections</p>
           </div>
 
           <div className=' px-4 py-2 rounded-md flex items-center justify-center gap-2 group cursor-pointer'
           onClick={()=>setActiveTab("resumes")}
           >
-            <p className={` text-base text-gray-300 group-hover:text-gray-400 px-4 py-1 rounded-full
-            ${activeTab === "resumes" && "bg-white shadow-md text-gray-900"}
+            <p className={` text-base text-gray-700 group-hover:text-gray-400 px-4 py-1 rounded-full
+            ${activeTab === "resumes" && "bg-emerald-200  shadow-md text-gray-900"}
             `}>My Resumes</p>
           </div>
         </div>
@@ -111,13 +112,14 @@ const UserProfile = () => {
 }
 
 const RenderTemplate = ({templates}) =>{
+  const {data:user} = useUser();
   return (
     <>{templates && templates.length >0 && 
       <>
       <AnimatePresence>
         {templates && templates.map((template , index)=>(
           <TemplateDesignPin 
-          key={template?.id} 
+          key={template?.id || user?.uid} 
           index={index} 
           data={template}/>
         ))}

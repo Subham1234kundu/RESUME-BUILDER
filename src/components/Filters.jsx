@@ -31,7 +31,7 @@ const Filters = () => {
 
   return (
     <div className=' w-full h-full flex items-center justify-start py-4'>
-      <div className=' border border-gray-700 rounded-md px-3 py-2 mr-2 cursor-pointer group hover:shadow-2xl bg-gray-500 relative'  
+      <div className=' border border-emerald-700 rounded-md px-3 py-2 mr-2 cursor-pointer group hover:shadow-2xl bg-emerald-500 relative'  
       onClick={clearFilter}    
       onMouseEnter={()=>setIsMoved(true)} 
       onMouseLeave={()=>setIsMoved(false)}>
@@ -41,7 +41,7 @@ const Filters = () => {
           {isMoved && 
           <motion.div 
           {...slideUpDownWithScale}
-          className=' absolute -top-8 -left-2 bg-gray-400 shadow-md rounded-md px-2 py-1'
+          className=' absolute -top-8 -left-2 bg-emerald-400 shadow-md rounded-md px-2 py-1'
 
           >
             <p className=' whitespace-nowrap text-xs text-white'>Clear All</p>
@@ -56,10 +56,10 @@ const Filters = () => {
           <div
            onClick={()=>handleFilterValue(item.value)}
           key={item.id} 
-          className={` border border-gray-900 bg-gray-500 rounded-md cursor-pointer px-6 py-2 group hover:bg-gray-600 
-          ${filterData?.searchTerm === item.value && "bg-gray-700 shadow-md"}
+          className={` border border-emerald-700 bg-emerald-500 rounded-md cursor-pointer px-6 py-2 group hover: shadow-xl
+          ${filterData?.searchTerm === item.value && " shadow-md"}
           `}>
-            <p className='text-sm text-white whitespace-nowrap group-hover:text-gray-400'>{item.label}</p>
+            <p className='text-sm text-white whitespace-nowrap group-hover:text-gray-100'>{item.label}</p>
           </div>
         ))}
       </div>
