@@ -37,7 +37,7 @@ const Header = () => {
   }
 
   return (
-    <header className='w-full flex items-center justify-between px-4 py-3 lg:px-8 border-b border-gray-200 bg-[#e9e9e9] z-50 gap-12 sticky top-0'>
+    <header className='w-full flex items-center justify-between px-4 py-3 lg:px-8 border-b border-gray-200 bg-[#e9e9e9] z-50 gap-5 sticky top-0 md:gap-12'>
       <Link to={"/"}>
         <img src={Logo} className=' w-12 h-auto object-contain' alt="" />
       </Link>
