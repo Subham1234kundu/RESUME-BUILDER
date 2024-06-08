@@ -3,6 +3,7 @@ import Filters from '../components/Filters';
 import useTemplates from "../hooks/useTemplates"
 import { AnimatePresence } from 'framer-motion';
 import TemplateDesignPin from '../components/TemplateDesignPin';
+
 const HomeContainer = () => {
 
   const { data:templates, isLoading:temp_isLoading, isError:temp_isError, refetch:temp_refetch } = useTemplates();

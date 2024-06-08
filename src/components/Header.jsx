@@ -46,13 +46,13 @@ const Header = () => {
         <input 
         value={filterData?.searchTerm ? filterData?.searchTerm : ""}
         onChange={handleSearchTerm}
-        type="text" placeholder='Search here...' className='flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none text-[#494949]' />
+        type="text" placeholder='Search here...' className='flex-1 sm:h-10 w-20 bg-transparent text-base font-semibold outline-none border-none text-[#494949]' />
                 <AnimatePresence>
           {filterData?.searchTerm.length > 0 ? 
          ( <motion.div
          onClick={clearFilter}
          {...fadeInOutOpacity}
-         className='w-8 h-8 flex items-center justify-center bg-gray-600 rounded-md cursor-pointer active:scale-95 duration-150 text-gray-200'
+         className='w-8 h-8 flex items-center  justify-center bg-[#d6d6d6] rounded-md cursor-pointer active:scale-95 duration-150 text-gray-900 '
          > <p>X</p> </motion.div>):<></>
           }
         </AnimatePresence>

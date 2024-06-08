@@ -64,11 +64,12 @@ const addToFavrouts = async(e)=>{
           {/* title and other section */}
         <div className=' w-full flex flex-col items-start justify-start
          gap-2'>
-          <div className=' w-full flex items-center justify-between'>
+          <div className=' w-full flex  items-center justify-between'>
             <p className=' text-base text-gray-400 font-semibold'>
               {data?.title}
             </p>
 
+            
             {/* likes */}
             {data?.favrourits?.length > 0 && (
             <div className=' flex items-center justify-center gap-1'>
@@ -79,10 +80,11 @@ const addToFavrouts = async(e)=>{
 
           </div>
 
+            
             {/* collection favrouts opction  */}
             {user && (
               <div            
-              className=' flex items-center justify-center gap-3'>
+              className=' flex flex-col items-center justify-center gap-3 '>
                 { user?.collections?.includes(data?.id) ? 
                 <>
                 <div 
@@ -138,7 +140,7 @@ const addToFavrouts = async(e)=>{
         <div className=' col-span-1 lg:col-span-4 w-full flex flex-col ic justify-start px-3 lg:py-0 py-3 gap-6'>
           {/* Discover more */}
           <div 
-          className=' w-full h-72 bg-blue-200 rounded-md overflow-hidden relative'
+          className=' w-full h-28 lg:h-72 bg-blue-200 rounded-md overflow-hidden relative'
           style={{background:"url(https://images.unsplash.com/photo-1586053113575-4f3b3ca59a04?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)" , backgroundPosition:"center",backgroundSize:"cover"}}
           >
             <div className=' absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.4)]'>

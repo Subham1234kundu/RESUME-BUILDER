@@ -25,7 +25,6 @@ import {
   BsFiletypeJpg,
   BsFiletypeSvg,
 } from "react-icons/bs";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { fadeInOutOpacity, opacityINOut } from "../../animations";
 
@@ -494,7 +493,7 @@ const Template2 = () => {
     );
   }
   return (
-    <div className="w-full flex flex-col items-center justify-start gap-4">
+    <div className="w-full  flex flex-col items-center justify-start gap-4">
       {/* bread crump */}
       <div className="w-full flex items-center gap-2 px-4">
         <Link
@@ -513,14 +512,16 @@ const Template2 = () => {
         <p>Edit</p>
       </div>
 
-      <div className="w-full lg:w-[1200px] grid grid-cols-1 lg:grid-cols-12 px-6 lg:px-32">
+      <div className="w-full lg:w-[1200px] grid grid-cols-1 lg:grid-cols-12 px-1 md:px-6 lg:px-32">
         {/* template design */}
-        <div className="col-span-12 px-4 py-6">
-          <div className="flex items-center justify-end w-full gap-12 mb-4">
+        <div className="col-span-12 px-1 md:px-4 md:py-6">
+          <div className="flex md:flex-row flex-col items-center justify-end w-full gap-7 md:gap-12 mb-4">
+          <div className=" flex gap-6">
             <div
               className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-200 cursor-pointer"
               onClick={toggleEditable}
             >
+              
               {isEdit ? (
                 <FaPenToSquare className="text-sm text-txtPrimary" />
               ) : (
@@ -535,6 +536,7 @@ const Template2 = () => {
             >
               <BiSolidBookmarks className="text-sm text-txtPrimary" />
               <p className="text-sm text-txtPrimary">Save</p>
+            </div>
             </div>
 
             <div className=" flex items-center justify-center gap-2">
@@ -557,9 +559,11 @@ const Template2 = () => {
               />
             </div>
           </div>
+
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
+            
             <div className="col-span-4 bg-black flex flex-col items-center justify-start">
-              <div className="w-full h-80 bg-gray-300 flex items-center justify-center">
+              <div className="w-full h-48 md:h-80 bg-gray-300 flex items-center justify-center">
                 {!imageAsset.imageURL ? (
                   <React.Fragment>
                     <label className=" w-full cursor-pointer h-full">
@@ -567,7 +571,7 @@ const Template2 = () => {
                         <div className="w-full flex flex-col justify-center items-center cursor-pointer">
                           <img
                             src={TemplateTwo}
-                            className="w-full h-80 object-cover"
+                            className="w-full h-48 md:h-80 object-cover"
                             alt=""
                           />
                         </div>
@@ -604,9 +608,9 @@ const Template2 = () => {
                 )}
               </div>
 
-              <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
+              <div className="w-full flex flex-col items-center justify-start md:pl-8 pl-3 mt-2 md:mt-4 gap-6">
                 <div className="w-full">
-                  <p className="uppercase text-lg font-semibold text-gray-100">
+                  <p className="uppercase text-base md:text-lg font-semibold text-gray-100">
                     Education
                   </p>
                   <div className="w-full h-[2px] bg-gray-400 mt-2"></div>
@@ -616,18 +620,8 @@ const Template2 = () => {
                         <motion.div
                           key={i}
                           {...opacityINOut(i)}
-                          className="w-full pl-4 mt-3 relative"
+                          className="w-full pl-1 md:pl-4 mt-1 md:mt-3 relative"
                         >
-                          <input
-                            type="text"
-                            readOnly={true}
-                            name="major"
-                            value={edu.major}
-                            onChange={(e) => handleEducationChange(i, e)}
-                            className={`bg-transparent outline-none border-none text-sm font-semibold uppercase  text-gray-100  ${
-                              isEdit && "bg-gray-400 w-full"
-                            }`}
-                          />
 
                           <textarea
                             readOnly={true}
@@ -674,11 +668,11 @@ const Template2 = () => {
 
                 {/* reference */}
                 <div className="w-full">
-                  <p className="uppercase text-lg font-semibold text-gray-100">
+                  <p className="uppercase text-base md:text-lg font-semibold text-gray-100">
                     Reference
                   </p>
                   <div className="w-full h-[2px] bg-gray-400 mt-2"></div>
-                  <div className="w-full pl-4 mt-3">
+                  <div className="w-full  md:pl-4 mt-3">
                     <input
                       value={formData.refererName}
                       onChange={handleChange}
@@ -800,10 +794,12 @@ const Template2 = () => {
                 </div>
               </div>
             </div>
-            <div className="col-span-8 flex flex-col items-center justify-start py-6 bg-white">
+
+
+            <div className="col-span-8 flex flex-col items-center justify-start md:py-6 bg-white">
               <div className="w-full py-6"></div>
               {/* title */}
-              <div className="w-full px-8 py-6 ">
+              <div className="w-full px-2 md:px-8 md:py-6 ">
                 <div className="flex items-center justify-start ">
                   <input
                     type="text"
@@ -811,8 +807,8 @@ const Template2 = () => {
                     name="fullname"
                     value={formData.fullname}
                     onChange={handleChange}
-                    className={`bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
-                      isEdit && "text-black w-full"
+                    className={`bg-transparent outline-none border-none text-xl md:text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
+                      isEdit && " text-white bg-gray-800 w-full"
                     }`}
                   />
                 </div>
@@ -823,20 +819,20 @@ const Template2 = () => {
                   name="professionalTitle"
                   type="text"
                   readOnly={true}
-                  className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
-                    isEdit && "text-black"
+                  className={`bg-transparent outline-none border-none md:text-xl tracking-widest uppercase text-txtPrimary w-full ${
+                    isEdit && "text-white bg-gray-800"
                   }`}
                 />
               </div>
 
               {/* about me */}
-              <div className="w-full px-8 py-6 flex flex-col items-start justify-start gap-6">
+              <div className="w-full px-2 py-3 md:px-8 md:py-6 flex flex-col items-start justify-start gap-1 md:gap-6">
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">About Me</p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <p className="uppercase md:text-xl tracking-wider ">About Me</p>
+                  <div className="w-full h-[2px] md:h-1 bg-txtDark my-1 md:my-3"></div>
                   <textarea
                     readOnly={true}
-                    className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                    className={`text-xs md:text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
                       isEdit ? "bg-gray-200" : "bg-transparent"
                     }`}
                     name="personalDescription"
@@ -854,11 +850,11 @@ const Template2 = () => {
 
                 {/* experience */}
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">
+                  <p className="uppercase  md:text-xl tracking-wider">
                     Work Experience
                   </p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
-                  <div className="w-full flex flex-col items-center justify-start gap-4">
+                  <div className="w-full h-[2px] md:h-1 bg-txtDark my-1 md:my-3"></div>
+                  <div className="w-full flex flex-col items-center justify-start  md:gap-4">
                     <AnimatePresence>
                       {experiences &&
                         experiences?.map((exp, i) => (
@@ -874,7 +870,7 @@ const Template2 = () => {
                                 name="year"
                                 type="text"
                                 readOnly={true}
-                                className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
+                                className={` outline-none border-none text-xs md:text-base tracking-eide uppercase text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
@@ -897,7 +893,7 @@ const Template2 = () => {
                                 name="title"
                                 type="text"
                                 readOnly={true}
-                                className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
+                                className={` outline-none border-none font-sans text-sm md:text-lg tracking-wide capitalize text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
@@ -908,14 +904,14 @@ const Template2 = () => {
                                 name="companyAndLocation"
                                 type="text"
                                 readOnly={true}
-                                className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
+                                className={` outline-none border-none text-xs md:text-sm tracking-wide capitalize text-txtPrimary w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
 
                               <textarea
                                 readOnly={true}
-                                className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                                className={`text-xs md:mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                                 name="description"
@@ -939,7 +935,7 @@ const Template2 = () => {
                           onClick={addExperience}
                           className="cursor-pointer"
                         >
-                          <FaPlus className="text-base text-txtPrimary" />
+                          <FaPlus className=" text-xs md:text-base text-txtPrimary" />
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -948,9 +944,9 @@ const Template2 = () => {
 
                 {/* skills */}
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">Skills</p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
-                  <div className="w-full flex flex-wrap items-center justify-start gap-4">
+                  <p className="uppercase text-lg md:text-xl tracking-wider">Skills</p>
+                  <div className="w-full h-[2px] md:h-1 bg-txtDark my-1 md:my-3"></div>
+                  <div className="w-full flex flex-wrap items-center justify-start gap-1 md:gap-4">
                     <AnimatePresence>
                       {skills &&
                         skills?.map((skill, i) => (
@@ -968,7 +964,7 @@ const Template2 = () => {
                                   name="title"
                                   type="text"
                                   readOnly={true}
-                                  className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                  className={` outline-none border-none text-xs md:text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
                                     isEdit ? "bg-gray-200" : "bg-transparent"
                                   }`}
                                 />
@@ -981,7 +977,7 @@ const Template2 = () => {
                                       onChange={(e) => handleSkillsChange(i, e)}
                                       name="percentage"
                                       type="text"
-                                      className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                      className={` outline-none border-none text-xs md:text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
                                         isEdit
                                           ? "bg-gray-200"
                                           : "bg-transparent"
@@ -998,12 +994,12 @@ const Template2 = () => {
                                     onClick={() => removeSkill(i)}
                                     className="cursor-pointer "
                                   >
-                                    <FaTrash className="text-base text-txtPrimary" />
+                                    <FaTrash className=" text-xs md:text-base text-txtPrimary" />
                                   </motion.div>
                                 )}
                               </AnimatePresence>
                             </div>
-                            <div className="relative mt-2 w-full h-1 rounded-md bg-gray-400">
+                            <div className="relative md:mt-2 w-full h-[2px] md:h-1 rounded-md bg-gray-400">
                               <div
                                 className="h-full rounded-md bg-gray-600"
                                 style={{
@@ -1018,13 +1014,13 @@ const Template2 = () => {
                   </div>
                   <AnimatePresence>
                     {isEdit && (
-                      <div className="w-full  flex items-center justify-center py-4">
+                      <div className="w-full  flex items-center justify-center py-1 md:py-4">
                         <motion.div
                           {...fadeInOutOpacity}
                           onClick={addSkill}
                           className="cursor-pointer"
                         >
-                          <FaPlus className="text-base text-txtPrimary" />
+                          <FaPlus className=" text-xsmd:text-base text-txtPrimary" />
                         </motion.div>
                       </div>
                     )}

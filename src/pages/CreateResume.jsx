@@ -10,8 +10,8 @@ const CreateResume = () => {
           TemplatesData.map((template)=>(
             <Route 
             key={template ?.id} 
-            path={`/${template.name}`}
-            Component={template.component}
+            path={`/${template?.name}`}
+            Component={template?.component}
             />       
           ))
         }
